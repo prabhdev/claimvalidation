@@ -24,6 +24,7 @@ Development features:
 6. Crud repository for DAO operations - apache derby for in memory DB
 7. Caffeine for maintaining cache
 8. RestTemplate for inter-microservices comm. (TODO)
+9. MockMVC for unit tests
 
 High Level Architecture:
 

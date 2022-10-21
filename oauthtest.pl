@@ -62,9 +62,6 @@ my $imapC = Mail::IMAPClient->new(
 $imapC->authenticate('XOAUTH2', sub { return $oauth_sign }) or die("Auth error: ". $imapC->LastError);
 
 print $imapC->folders or die("List folders error: ". $imapC->LastError);
-                
-               
-      
-        
+     
 
 ;

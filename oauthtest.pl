@@ -62,6 +62,23 @@ my $imapC = Mail::IMAPClient->new(
 $imapC->authenticate('XOAUTH2', sub { return $oauth_sign }) or die("Auth error: ". $imapC->LastError);
 
 print $imapC->folders or die("List folders error: ". $imapC->LastError);
+
+sub getMsgsAndFolders {
+    my ( $self, $config, $log, $imap ) = @_;
+
+    $imap->select('INBOX') or $log->logdie( "Could not access mailbox INBOX: " . $imap->last_error );
+    my @folders = $imap->folders or $log->logdie( $imap->last_error );
+
+    my $all_messages = $imap->search( 'ALL', '', 'US-ASCII' )
+         or $log->logdie( "Can't search messages for 'ALL': " . $imap->last_error );
+    $log->info( scalar(@$all_messages) . " total messages currently available" );
+
+    return ( $all_messages, \@folders ) unless ( defined $all_messages && @$all_messages );
+
+    $log->debug( join( ', ', @$all_messages ) );
+
+    return ( $all_messages, \@folders );
+}
      
 
 ;
